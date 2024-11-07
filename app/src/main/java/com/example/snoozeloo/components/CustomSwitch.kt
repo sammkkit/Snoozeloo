@@ -20,8 +20,16 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.snoozeloo.R
+
+@Composable
+fun pxToSp(px: Int): TextUnit {
+    val density = LocalDensity.current.density
+    return (px / density).sp
+}
 
 @Composable
 fun pxToDp(px: Int): Dp {
@@ -30,6 +38,7 @@ fun pxToDp(px: Int): Dp {
 }
 @Composable
 fun CustomSwitch(
+    modifier: Modifier,
     checked :Boolean,
     onCheckedChange : (Boolean)->Unit,
 ){
@@ -39,7 +48,7 @@ fun CustomSwitch(
         thumbContent = {
             Box(
                 modifier = Modifier
-                    .size(pxToDp(26)) // Size of the thumb
+                    .size(pxToDp(20)) // Size of the thumb
                     .background(
                         color = if (checked) Color.White else Color.White.copy(0.12f),
                         shape = CircleShape
@@ -53,6 +62,7 @@ fun CustomSwitch(
             uncheckedTrackColor = colorResource(R.color.light_purple),
             uncheckedBorderColor = Color.Transparent
         ),
+        modifier = modifier
     )
 }
 @Composable
@@ -60,6 +70,7 @@ fun CustomSwitch(
 fun prev(){
     var checked by remember { mutableStateOf(false) }
     CustomSwitch(
+        modifier = Modifier,
         checked = checked,
         onCheckedChange = {
             checked = it
