@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.snoozeloo.R
 import com.example.snoozeloo.data.Alarm
+import com.example.snoozeloo.data.mockAlarms
 
 @Composable
 fun AlarmItem(
@@ -69,7 +70,7 @@ fun AlarmItem(
                     horizontalArrangement = Arrangement.Center
                 ){
                     Text(
-                        text = "${alarm.time}",
+                        text = "${alarm.hour}:${alarm.minute}",
                         color = Color(0xFF0D0F19),
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.montserrat_regular)),
@@ -117,13 +118,8 @@ fun AlarmItem(
 @Composable
 @Preview
 fun AlarmItemPrev(){
-    val alarm = Alarm(
-        name = "Wake Up",
-        time = "10:00",
-        toggle = true
-    )
     AlarmItem(
-        alarm = alarm,
+        alarm = mockAlarms[0],
         modifier = Modifier
     )
 

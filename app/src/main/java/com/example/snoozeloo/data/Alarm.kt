@@ -2,26 +2,30 @@ package com.example.snoozeloo.data
 
 data class Alarm(
     var name : String = "",
-    var time : String = "",
+    var hour : Int = 0,
+    var minute : Int = 0,
     var toggle : Boolean = false,
     var meridiem : String = "AM",
 )
 val mockAlarms = listOf(
     Alarm(
         name = "Wake Up",
-        time = "07:00",
+        hour = 7,
+        minute = 0,
         toggle = true,
         meridiem = "AM"
     ),
     Alarm(
         name = "Workout",
-        time = "06:00",
+        hour = 6,
+        minute = 0,
         toggle = false,
         meridiem = "AM"
     ),
     Alarm(
         name = "Meeting",
-        time = "09:30",
+        hour = 9,
+        minute = 30,
         toggle = true,
         meridiem = "AM"
     )
