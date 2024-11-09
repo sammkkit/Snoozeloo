@@ -43,7 +43,8 @@ dependencies {
 
     //splash screen
     implementation(libs.androidx.core.splashscreen)
-    
+    //time picker
+    implementation("com.github.commandiron:WheelPickerCompose:1.1.11")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

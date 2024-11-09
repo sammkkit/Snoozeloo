@@ -45,6 +45,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.ui.text.style.TextAlign
+import com.commandiron.wheel_picker_compose.WheelTimePicker
 import com.example.snoozeloo.components.AlarmTime
 
 @Composable
@@ -52,7 +53,7 @@ fun AlarmSetting(
     onCancelClick :()->Unit = {},
     onSaveClick:()->Unit = {}
 ){
-    var timeOfAlarm by remember { mutableStateOf(Pair(10, 0)) }
+    var timeOfAlarm by remember { mutableStateOf(Pair(20, 0)) }
     var alarmName by remember { mutableStateOf("Work") }
     var saveColor = if (timeOfAlarm == Pair(0,0)){
         Color(0xFFE6E6E6)
@@ -113,6 +114,7 @@ fun AlarmSetting(
                 timeOfAlarm = it
             }
         )
+
         Spacer(modifier = Modifier.height(20.dp))
         AlarmCard {
             alarmName = it
@@ -185,7 +187,7 @@ fun AlarmCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {

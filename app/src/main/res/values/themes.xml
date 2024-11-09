@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name ="Theme.myCustomSplash" parent="Theme.SplashScreen">
+
+    <style name="Theme.Snoozeloo" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.Snoozeloo.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/purple</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/clock_icon</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/alarm_clock</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/purple</item>
+        <!-- Switch to the original Theme when splash screen concludes -->
         <item name="postSplashScreenTheme">@style/Theme.Snoozeloo</item>
     </style>
-    <style name="Theme.Snoozeloo" parent="android:Theme.Material.Light.NoActionBar" />
+
 </resources>
