@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.commandiron.wheel_picker_compose.WheelTimePicker
 import com.commandiron.wheel_picker_compose.core.TimeFormat
+import com.example.snoozeloo.Navigation.MainNavigation
 import com.example.snoozeloo.ui.theme.SnoozelooTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,15 +30,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SnoozelooTheme {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    WheelTimePicker(
-                        modifier= Modifier.background(Color.Red)
-                    ){ snappedTime -> }
-                }
+                MainNavigation()
             }
         }
     }

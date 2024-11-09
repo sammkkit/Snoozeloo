@@ -1,4 +1,4 @@
-package com.example.snoozeloo.components
+package com.example.snoozeloo.Presentation.components
 
 import android.text.BoringLayout
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package com.example.snoozeloo.components
+package com.example.snoozeloo.Presentation.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background

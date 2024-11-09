@@ -1,4 +1,4 @@
-package com.example.snoozeloo.Screens
+package com.example.snoozeloo.Presentation.Screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -25,8 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -37,20 +35,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.snoozeloo.Presentation.MainViewModel
 import com.example.snoozeloo.R
-import com.example.snoozeloo.components.AlarmItem
+import com.example.snoozeloo.Presentation.components.AlarmItem
 import com.example.snoozeloo.data.Alarm
 import com.example.snoozeloo.data.mockAlarms
 
 @Composable
 fun AlarmListScreen(
-
+    mainViewModel: MainViewModel,
+    onPlusClick:()->Unit = {}
 ){
     var AlarmList by remember { mutableStateOf(listOf<Alarm>()) }
     AlarmList = mockAlarms
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxSize()
+                .padding(top = 32.dp)
                 .padding(16.dp)
         ) {
             Text(
@@ -103,7 +104,9 @@ fun AlarmListScreen(
             }
         }
         FloatingActionButton(
-            onClick = { /* Handle FAB click */ },
+            onClick = {
+                onPlusClick.invoke()
+            },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 40.dp)

@@ -1,4 +1,4 @@
-package com.example.snoozeloo.components
+package com.example.snoozeloo.Presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,6 +13,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,6 +37,7 @@ fun AlarmItem(
     modifier: Modifier,
     alarm:Alarm
 ){
+    var isChecked by remember { mutableStateOf(alarm.toggle) }
     Card(
         modifier = modifier.fillMaxWidth()
             .height(140.dp)
@@ -105,9 +110,9 @@ fun AlarmItem(
 
             }
             CustomSwitch(
-                checked = alarm.toggle,
+                checked = isChecked,
                 onCheckedChange = {
-                    alarm.toggle = it
+                    isChecked = it
                 },
                 modifier = Modifier
             )

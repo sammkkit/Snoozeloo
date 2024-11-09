@@ -1,4 +1,4 @@
-package com.example.snoozeloo.Screens
+package com.example.snoozeloo.Presentation.Screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,15 +41,13 @@ import com.example.snoozeloo.R
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
-import androidx.compose.ui.text.style.TextAlign
-import com.commandiron.wheel_picker_compose.WheelTimePicker
-import com.example.snoozeloo.components.AlarmTime
+import com.example.snoozeloo.Presentation.MainViewModel
+import com.example.snoozeloo.Presentation.components.AlarmTime
 
 @Composable
 fun AlarmSetting(
+    mainViewModel: MainViewModel,
     onCancelClick :()->Unit = {},
     onSaveClick:()->Unit = {}
 ){
@@ -63,6 +61,7 @@ fun AlarmSetting(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(top = 32.dp)
             .padding(16.dp)
     ) {
         Row(
@@ -90,7 +89,7 @@ fun AlarmSetting(
 
             // Save Button
             Button(
-                onClick = onCancelClick,
+                onClick = onSaveClick,
                 colors = ButtonDefaults.buttonColors(saveColor),
                 modifier = Modifier
                     .clip(RoundedCornerShape(6.dp))
@@ -228,9 +227,9 @@ fun EditableTextField(text: String, onEditClick: () -> Unit) {
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun AlarmSettingPreview(){
-    AlarmSetting()
-}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun AlarmSettingPreview(){
+//    AlarmSetting()
+//}
