@@ -42,14 +42,16 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.TextField
+import androidx.navigation.NavController
+import com.example.snoozeloo.Navigation.Destination
 import com.example.snoozeloo.Presentation.MainViewModel
 import com.example.snoozeloo.Presentation.components.AlarmTime
+import com.example.snoozeloo.data.Alarm
 
 @Composable
 fun AlarmSetting(
     mainViewModel: MainViewModel,
-    onCancelClick :()->Unit = {},
-    onSaveClick:()->Unit = {}
+    navController: NavController
 ){
     var timeOfAlarm by remember { mutableStateOf(Pair(20, 0)) }
     var alarmName by remember { mutableStateOf("Work") }
@@ -73,7 +75,9 @@ fun AlarmSetting(
         ) {
             // Cancel Icon Button
             IconButton(
-                onClick = onCancelClick,
+                onClick = {
+                    navController.navigate(Destination.Home)
+                },
                 modifier = Modifier
                     .clip(RoundedCornerShape(6.dp))
                     .background(Color(0xFFE6E6E6))
@@ -89,7 +93,17 @@ fun AlarmSetting(
 
             // Save Button
             Button(
-                onClick = onSaveClick,
+                onClick = {
+
+                    mainViewModel.addAlarm(Alarm(
+                        name = alarmName,
+                        hour = timeOfAlarm.first,
+                        minute = timeOfAlarm.second,
+                        toggle = true,
+                        meridiem = if(timeOfAlarm.first < 12) "AM" else "PM"
+                    ))
+                    navController.navigate(Destination.Home)
+                          },
                 colors = ButtonDefaults.buttonColors(saveColor),
                 modifier = Modifier
                     .clip(RoundedCornerShape(6.dp))

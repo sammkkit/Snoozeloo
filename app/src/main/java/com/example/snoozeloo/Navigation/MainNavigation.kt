@@ -29,12 +29,7 @@ fun MainNavigation(
         composable<Destination.AlarmSetting> {
             AlarmSetting(
                 mainViewModel = mainViewModel,
-                onCancelClick = {
-                    navController.navigate(Destination.Home)
-                },
-                onSaveClick = {
-                    navController.navigate(Destination.Home)
-                }
+                navController = navController
             )
         }
     }

@@ -117,6 +117,7 @@ fun AlarmTime(
             ){ snappedTime ->
                 alarmHours = snappedTime.hour
                 alarmMinutes = snappedTime.minute
+                onTimeChanged(Pair(alarmHours, alarmMinutes))
             }
 //            Row(
 //                modifier = Modifier.fillMaxWidth()

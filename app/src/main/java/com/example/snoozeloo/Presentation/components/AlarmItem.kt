@@ -31,12 +31,42 @@ import androidx.compose.ui.unit.sp
 import com.example.snoozeloo.R
 import com.example.snoozeloo.data.Alarm
 import com.example.snoozeloo.data.mockAlarms
+import java.time.LocalTime
+import java.time.temporal.ChronoUnit
 
 @Composable
 fun AlarmItem(
     modifier: Modifier,
     alarm:Alarm
 ){
+    var alarmHours by remember { mutableStateOf(alarm.hour) }
+    var alarmMinutes by remember { mutableStateOf(alarm.minute) }
+
+    val currentTime = LocalTime.now()
+    val alarmTime = LocalTime.of(alarmHours, alarmMinutes)
+
+    // Calculate time until alarm, accounting for the next day if alarmTime is before currentTime
+    val durationUntilAlarm = if (currentTime.isBefore(alarmTime)) {
+        ChronoUnit.MINUTES.between(currentTime, alarmTime)
+    } else {
+        // Adds 24 hours to the alarm time if it is for the next day
+        ChronoUnit.MINUTES.between(currentTime, alarmTime.plusHours(24))
+    }
+
+    // Convert the duration into hours and minutes
+    var hoursLeft = (durationUntilAlarm / 60).toInt()
+    var minutesLeft = (durationUntilAlarm % 60).toInt()
+    if (minutesLeft < 0) {
+        minutesLeft += 60
+        hoursLeft -= 1
+    }
+
+    if (hoursLeft < 0) {
+        hoursLeft += 24
+    }
+    val timeLeftText = "${hoursLeft}h ${minutesLeft}min"
+
+
     var isChecked by remember { mutableStateOf(alarm.toggle) }
     Card(
         modifier = modifier.fillMaxWidth()
@@ -98,7 +128,7 @@ fun AlarmItem(
                     )
                 }
                 Text(
-                    text = "Alarm in 30min",
+                    text = "Alarm in $timeLeftText",
                     color = Color(0xFF858585),
                     style = TextStyle(
                         fontFamily = FontFamily(Font(R.font.montserrat_regular)),

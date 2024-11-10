@@ -1,6 +1,12 @@
 package com.example.snoozeloo.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "alarms")
 data class Alarm(
+    @PrimaryKey(autoGenerate = true)
+    val id:Int = 0,
     var name : String = "",
     var hour : Int = 0,
     var minute : Int = 0,
