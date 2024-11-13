@@ -1,5 +1,6 @@
 package com.example.snoozeloo.Navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,7 +11,7 @@ import com.example.snoozeloo.Presentation.Screens.AlarmSetting
 import org.koin.androidx.compose.koinViewModel
 @Composable
 fun MainNavigation(
-
+    context: Context
 ) {
     val mainViewModel: MainViewModel = koinViewModel()
     val navController = rememberNavController()
@@ -21,6 +22,7 @@ fun MainNavigation(
         composable<Destination.Home>{
            AlarmListScreen(
                mainViewModel = mainViewModel,
+               context = context,
                onPlusClick = {
                    navController.navigate(Destination.AlarmSetting)
                }

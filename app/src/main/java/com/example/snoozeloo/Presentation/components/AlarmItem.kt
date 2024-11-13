@@ -13,6 +13,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,43 +32,51 @@ import androidx.compose.ui.unit.sp
 import com.example.snoozeloo.R
 import com.example.snoozeloo.data.Alarm
 import com.example.snoozeloo.data.mockAlarms
+import kotlinx.coroutines.delay
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 
 @Composable
 fun AlarmItem(
     modifier: Modifier,
-    alarm:Alarm
+    alarm:Alarm,
+    onAlarmToggle:(Boolean)->Unit={}
 ){
     var alarmHours by remember { mutableStateOf(alarm.hour) }
     var alarmMinutes by remember { mutableStateOf(alarm.minute) }
-
-    val currentTime = LocalTime.now()
-    val alarmTime = LocalTime.of(alarmHours, alarmMinutes)
-
-    // Calculate time until alarm, accounting for the next day if alarmTime is before currentTime
-    val durationUntilAlarm = if (currentTime.isBefore(alarmTime)) {
-        ChronoUnit.MINUTES.between(currentTime, alarmTime)
-    } else {
-        // Adds 24 hours to the alarm time if it is for the next day
-        ChronoUnit.MINUTES.between(currentTime, alarmTime.plusHours(24))
-    }
-
-    // Convert the duration into hours and minutes
-    var hoursLeft = (durationUntilAlarm / 60).toInt()
-    var minutesLeft = (durationUntilAlarm % 60).toInt()
-    if (minutesLeft < 0) {
-        minutesLeft += 60
-        hoursLeft -= 1
-    }
-
-    if (hoursLeft < 0) {
-        hoursLeft += 24
-    }
-    val timeLeftText = "${hoursLeft}h ${minutesLeft}min"
-
-
+    var timeLeftText by remember { mutableStateOf("") }
     var isChecked by remember { mutableStateOf(alarm.toggle) }
+
+    LaunchedEffect(alarmHours, alarmMinutes) {
+        while (true) {
+            // Get the current time and calculate the time until alarm
+            val currentTime = LocalTime.now()
+            val alarmTime = LocalTime.of(alarmHours, alarmMinutes)
+
+            val durationUntilAlarm = if (currentTime.isBefore(alarmTime)) {
+                ChronoUnit.MINUTES.between(currentTime, alarmTime)
+            } else {
+                ChronoUnit.MINUTES.between(currentTime, alarmTime.plusHours(24))
+            }
+
+            // Convert the duration into hours and minutes
+            var hoursLeft = (durationUntilAlarm / 60).toInt()
+            var minutesLeft = (durationUntilAlarm % 60).toInt()
+            if (minutesLeft < 0) {
+                minutesLeft += 60
+                hoursLeft -= 1
+            }
+
+            if (hoursLeft < 0) {
+                hoursLeft += 24
+            }
+            timeLeftText = "${hoursLeft}h ${minutesLeft}min"
+
+            // Wait for 1 minute before recalculating
+            delay(60000L) // 60000ms = 1 minute
+        }
+    }
+
     Card(
         modifier = modifier.fillMaxWidth()
             .height(140.dp)
@@ -143,6 +152,7 @@ fun AlarmItem(
                 checked = isChecked,
                 onCheckedChange = {
                     isChecked = it
+                    onAlarmToggle
                 },
                 modifier = Modifier
             )

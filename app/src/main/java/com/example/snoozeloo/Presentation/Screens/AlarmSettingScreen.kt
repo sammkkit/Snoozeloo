@@ -1,5 +1,6 @@
 package com.example.snoozeloo.Presentation.Screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -42,6 +43,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.TextField
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.example.snoozeloo.Navigation.Destination
 import com.example.snoozeloo.Presentation.MainViewModel
@@ -60,6 +63,9 @@ fun AlarmSetting(
     }else{
         Color(0xFF4664FF)
     }
+    val existingAlarms by mainViewModel.alarmList.collectAsState()
+
+    val context = LocalContext.current //
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -76,7 +82,11 @@ fun AlarmSetting(
             // Cancel Icon Button
             IconButton(
                 onClick = {
-                    navController.navigate(Destination.Home)
+                    navController.navigate(Destination.Home){
+                        popUpTo(Destination.Home){
+                            inclusive = true
+                        }
+                    }
                 },
                 modifier = Modifier
                     .clip(RoundedCornerShape(6.dp))
@@ -94,16 +104,31 @@ fun AlarmSetting(
             // Save Button
             Button(
                 onClick = {
+                    val alarmExists = existingAlarms.any {
+                        it.hour == timeOfAlarm.first && it.minute == timeOfAlarm.second
+                    }
 
-                    mainViewModel.addAlarm(Alarm(
-                        name = alarmName,
-                        hour = timeOfAlarm.first,
-                        minute = timeOfAlarm.second,
-                        toggle = true,
-                        meridiem = if(timeOfAlarm.first < 12) "AM" else "PM"
-                    ))
-                    navController.navigate(Destination.Home)
-                          },
+                    if (alarmExists) {
+                        // Show toast if alarm already exists
+                        Toast.makeText(
+                            context,
+                            "Alarm already exists for this time!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        // Save the alarm
+                        mainViewModel.addAlarm(
+                            Alarm(
+                                name = alarmName,
+                                hour = timeOfAlarm.first,
+                                minute = timeOfAlarm.second,
+                                toggle = true,
+                                meridiem = if (timeOfAlarm.first < 12) "AM" else "PM"
+                            )
+                        )
+                        navController.navigate(Destination.Home)
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(saveColor),
                 modifier = Modifier
                     .clip(RoundedCornerShape(6.dp))

@@ -1,5 +1,6 @@
 package com.example.snoozeloo.Presentation.Screens
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -45,6 +46,7 @@ import com.example.snoozeloo.data.mockAlarms
 @Composable
 fun AlarmListScreen(
     mainViewModel: MainViewModel,
+    context: Context,
     onPlusClick:()->Unit = {}
 ){
 //    var AlarmList by remember { mutableStateOf(listOf<Alarm>()) }
@@ -100,7 +102,13 @@ fun AlarmListScreen(
             }else {
                 LazyColumn {
                     items(AlarmList) { alarm ->
-                        AlarmItem(modifier = Modifier, alarm = alarm)
+                        AlarmItem(modifier = Modifier, alarm = alarm, onAlarmToggle = {
+                            if(it){
+                                mainViewModel.addAlarm(alarm)
+                            }else{
+                                mainViewModel.CancelAlarm(context,alarm)
+                            }
+                        })
                     }
                 }
             }

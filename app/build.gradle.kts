@@ -48,12 +48,10 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     implementation("androidx.room:room-runtime:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
-
+    //swipe to dismiss
+//    implementation("com.google.accompanist:accompanist-swipetodismiss:0.28.0")
     //koin
     implementation(libs.bundles.koin)
-//    implementation(libs.koin.core)
-//    implementation(libs.koin.android)
-//    implementation(libs.koin.androidx.compose)
     //mavigation
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
