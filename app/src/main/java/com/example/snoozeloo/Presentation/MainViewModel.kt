@@ -24,35 +24,30 @@ class MainViewModel(
     val alarmList = _alarmList.asStateFlow()
     init {
         Log.d("MainViewModel", "MainViewModel initialized")
-        Log.d("MainViewModel", "alarmList: ${alarmList.value}")
         viewModelScope.launch {
             alarmRepository.alarms.collect { alarms ->
                 _alarmList.value = alarms
             }
         }
+        Log.d("MainViewModel", "alarmList: ${alarmList.value}")
     }
-    fun addAlarm(alarm: Alarm){
+    fun addAlarm(alarm: Alarm) {
         viewModelScope.launch {
+            Log.d("MainViewModel", "addAlarm called")
             val newAlarmID = alarmRepository.insertAlarm(alarm)
-            Log.d("AlarmRepository2", "New alarm ID: $newAlarmID")
+            Log.d("MainViewModel", "New alarm ID: $newAlarmID")
             val newAlarm = alarm.copy(id = newAlarmID.toInt())
-            ScheduleAlarm(context,newAlarm)
+            ScheduleAlarm(newAlarm)
         }
     }
-    fun CancelAlarm(context: Context,alarm: Alarm){
+    fun CancelAlarm(alarm: Alarm){
         viewModelScope.launch {
+            Log.d("MainViewModel", "CancelAlarm called ${alarm.id}")
             alarmRepository.cancelAlarm(context,alarm)
         }
     }
-    fun deleteAlarmItem(alarm: Alarm){
-        viewModelScope.launch {
-            alarmRepository.DeleteAlarm(alarm)
-        }
-    }
-    fun DeleteAlarm(context: Context,alarm: Alarm){
-        alarmRepository.cancelAlarm(context,alarm)
-    }
-    fun ScheduleAlarm(context: Context, alarm: Alarm) {
+    fun ScheduleAlarm(alarm: Alarm) {
+        Log.d("MainViewModel", "Alarm Scheduled ${alarm.id}")
         alarmRepository.scheduleAlarm(context,alarm)
     }
 }

@@ -58,6 +58,9 @@ class AlarmRepository(private val alarmDao: AlarmDao) {
             calendar.timeInMillis,
             pendingIntent
         )
+        CoroutineScope(Dispatchers.IO).launch {
+            UpdateAlarmtoON(alarm.id)
+        }
     }
     fun cancelAlarm(context: Context, alarm: Alarm) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager

@@ -47,6 +47,10 @@ fun AlarmItem(
     var timeLeftText by remember { mutableStateOf("") }
     var isChecked by remember { mutableStateOf(alarm.toggle) }
 
+    LaunchedEffect(alarm.toggle) {
+        isChecked = alarm.toggle
+    }
+
     LaunchedEffect(alarmHours, alarmMinutes) {
         while (true) {
             // Get the current time and calculate the time until alarm
@@ -137,7 +141,11 @@ fun AlarmItem(
                     )
                 }
                 Text(
-                    text = "Alarm in $timeLeftText",
+                    text = if (isChecked){
+                        "Alarm in $timeLeftText"
+                    }else{
+                        ""
+                    },
                     color = Color(0xFF858585),
                     style = TextStyle(
                         fontFamily = FontFamily(Font(R.font.montserrat_regular)),
@@ -152,7 +160,7 @@ fun AlarmItem(
                 checked = isChecked,
                 onCheckedChange = {
                     isChecked = it
-                    onAlarmToggle
+                    onAlarmToggle(it)
                 },
                 modifier = Modifier
             )

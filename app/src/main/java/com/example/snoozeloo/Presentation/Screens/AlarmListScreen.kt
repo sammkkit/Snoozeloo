@@ -1,6 +1,7 @@
 package com.example.snoozeloo.Presentation.Screens
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -103,10 +104,11 @@ fun AlarmListScreen(
                 LazyColumn {
                     items(AlarmList) { alarm ->
                         AlarmItem(modifier = Modifier, alarm = alarm, onAlarmToggle = {
+                            Log.d("AlarmListScreen", "Alarm toggled $it: ${alarm.name}")
                             if(it){
-                                mainViewModel.addAlarm(alarm)
+                                mainViewModel.ScheduleAlarm(alarm)
                             }else{
-                                mainViewModel.CancelAlarm(context,alarm)
+                                mainViewModel.CancelAlarm(alarm)
                             }
                         })
                     }
