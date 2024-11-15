@@ -42,8 +42,12 @@ import com.example.snoozeloo.R
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.example.snoozeloo.Navigation.Destination
@@ -159,12 +163,13 @@ fun AlarmSetting(
         }
     }
 }
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlarmCard(
     onClick: (String) -> Unit
 ) {
     var alarmName by remember { mutableStateOf("Work") }
-    var isDialogOpen by remember { mutableStateOf(false) }
+    var isDialogOpen by remember { mutableStateOf(true) }
 
     // Handle dialog open state here
     if (isDialogOpen) {
@@ -179,11 +184,15 @@ fun AlarmCard(
                     fontSize = 18.sp,
                 )
             ) },
+            containerColor = Color.White,
             text = {
-                TextField(
+                OutlinedTextField(
                     value = alarmName,
                     onValueChange = { alarmName = it },
-                    label = { Text("Alarm Name") }
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = Color(0xFFE6E6E6),
+                        unfocusedBorderColor = Color(0xFFE6E6E6)
+                    )
                 )
             },
             confirmButton = {
@@ -266,9 +275,11 @@ fun EditableTextField(text: String, onEditClick: () -> Unit) {
     }
 }
 
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun AlarmSettingPreview(){
-//    AlarmSetting()
-//}
+
+@Preview(showBackground = true)
+@Composable
+fun AlarmSettingPreview(){
+    AlarmCard(
+        onClick = {}
+    )
+}

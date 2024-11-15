@@ -27,9 +27,11 @@ class MainViewModel(
         viewModelScope.launch {
             alarmRepository.alarms.collect { alarms ->
                 _alarmList.value = alarms
+                Log.d("MainViewModel", "alarmList: ${_alarmList.value}")
             }
+
         }
-        Log.d("MainViewModel", "alarmList: ${alarmList.value}")
+
     }
     fun addAlarm(alarm: Alarm) {
         viewModelScope.launch {
