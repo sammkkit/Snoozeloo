@@ -74,7 +74,7 @@ fun AlarmItem(
             if (hoursLeft < 0) {
                 hoursLeft += 24
             }
-            timeLeftText = "${hoursLeft}h ${minutesLeft}min"
+            timeLeftText = "${hoursLeft}h ${minutesLeft+1}min"
 
             // Wait for 1 minute before recalculating
             delay(60000L) // 60000ms = 1 minute

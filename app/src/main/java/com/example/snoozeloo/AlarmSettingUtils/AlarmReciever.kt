@@ -67,5 +67,13 @@ class AlarmReciever: BroadcastReceiver() {
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(1, notification)
         Log.d("AlarmReceiver", "Notification sent for alarm ID: $alarmID")
+
+        context.let {
+            val alarmintent = Intent(it, AlarmActivity::class.java).apply {
+                putExtra("alarm_id", alarmID) // Passing alarm data
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK // Required to start Activity from BroadcastReceiver
+            }
+            it.startActivity(alarmintent)
+        }
     }
 }

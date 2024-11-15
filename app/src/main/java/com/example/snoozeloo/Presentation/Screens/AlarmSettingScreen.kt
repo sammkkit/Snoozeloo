@@ -169,7 +169,7 @@ fun AlarmCard(
     onClick: (String) -> Unit
 ) {
     var alarmName by remember { mutableStateOf("Work") }
-    var isDialogOpen by remember { mutableStateOf(true) }
+    var isDialogOpen by remember { mutableStateOf(false) }
 
     // Handle dialog open state here
     if (isDialogOpen) {

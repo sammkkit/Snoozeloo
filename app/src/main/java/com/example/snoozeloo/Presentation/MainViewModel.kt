@@ -52,4 +52,9 @@ class MainViewModel(
         Log.d("MainViewModel", "Alarm Scheduled ${alarm.id}")
         alarmRepository.scheduleAlarm(context,alarm)
     }
+    fun deleteAllAlarms(){
+        viewModelScope.launch {
+            alarmRepository.DeleteAllalarms()
+        }
+    }
 }

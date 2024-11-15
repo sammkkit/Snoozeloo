@@ -78,7 +78,7 @@ fun AlarmTime(
     if (hoursLeft < 0) {
         hoursLeft += 24
     }
-    val timeLeftText = "${hoursLeft}h ${minutesLeft}min"
+    val timeLeftText = "${hoursLeft}h ${minutesLeft+1}min"
 
     // Display time left until alarm in the UI
     var alarmIn by remember { mutableStateOf(timeLeftText) }

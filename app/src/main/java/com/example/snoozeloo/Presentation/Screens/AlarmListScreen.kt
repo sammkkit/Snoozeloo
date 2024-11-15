@@ -3,6 +3,7 @@ package com.example.snoozeloo.Presentation.Screens
 import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,6 +45,7 @@ import com.example.snoozeloo.R
 import com.example.snoozeloo.Presentation.components.AlarmItem
 import com.example.snoozeloo.data.Alarm
 import com.example.snoozeloo.data.mockAlarms
+import kotlinx.coroutines.delay
 
 @Composable
 fun AlarmListScreen(
@@ -53,6 +56,20 @@ fun AlarmListScreen(
 //    var AlarmList by remember { mutableStateOf(listOf<Alarm>()) }
     val AlarmList by mainViewModel.alarmList.collectAsState()
 //    AlarmList = mockAlarms
+    var clickCount by remember { mutableStateOf(0) }
+    val clickThreshold = 3 // Number of clicks to trigger the action
+    val timeLimitMs = 500L // Time limit for clicks (e.g., 500ms)
+
+    LaunchedEffect(clickCount) {
+        if (clickCount == clickThreshold) {
+            mainViewModel.deleteAllAlarms()
+            clickCount = 0
+        } else {
+            delay(timeLimitMs)
+            clickCount = 0
+        }
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -69,6 +86,10 @@ fun AlarmListScreen(
                     lineHeight = 29.sp,
                 ),
                 modifier = Modifier.padding(bottom = 24.dp)
+                    .clickable {
+                        clickCount++
+                    }
+
             )
             if(AlarmList.isEmpty()){
                 Box(

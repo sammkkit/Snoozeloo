@@ -25,4 +25,7 @@ interface AlarmDao {
 
     @Query("UPDATE alarms SET toggle = 1 WHERE id = :alarmId")
     suspend fun UpdateAlarmToON(alarmId: Int)
+
+    @Query("DELETE from alarms")
+    suspend fun DeleteAllAlarms()
 }

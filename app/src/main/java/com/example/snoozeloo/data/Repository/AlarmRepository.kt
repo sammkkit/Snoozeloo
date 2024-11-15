@@ -29,7 +29,9 @@ class AlarmRepository(private val alarmDao: AlarmDao) {
     suspend fun UpdateAlarmtoON(alarmID:Int){
         alarmDao.UpdateAlarmToON(alarmID)
     }
-
+    suspend fun DeleteAllalarms(){
+        alarmDao.DeleteAllAlarms()
+    }
     fun scheduleAlarm(context: Context, alarm: Alarm) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 

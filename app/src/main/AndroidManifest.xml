@@ -25,7 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Presentation.Screens.AlarmActivity" />
+        <activity android:name=".Presentation.Screens.AlarmActivity"
+            android:theme="@style/FullscreenTheme"/>
         <receiver android:name=".AlarmSettingUtils.AlarmReciever" android:enabled="true" android:exported="false" />
 
     </application>
