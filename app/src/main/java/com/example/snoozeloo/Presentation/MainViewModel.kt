@@ -11,6 +11,7 @@ import com.example.snoozeloo.AlarmSettingUtils.AlarmReciever
 import com.example.snoozeloo.data.Alarm
 import com.example.snoozeloo.data.Repository.AlarmRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -54,7 +55,20 @@ class MainViewModel(
     }
     fun deleteAllAlarms(){
         viewModelScope.launch {
+            _alarmList.value.forEach { alarm ->
+                CancelAlarm(alarm)
+            }
             alarmRepository.DeleteAllalarms()
         }
     }
+    private val _alarmByID = MutableStateFlow<Alarm?>(null)
+    val alarmByID: StateFlow<Alarm?> = _alarmByID.asStateFlow()
+
+    fun getAlarmByID(alarmId: Int) {
+        viewModelScope.launch {
+            val alarm = alarmRepository.getAlarmById(alarmId) // Fetch from database
+            _alarmByID.value = alarm
+        }
+    }
+
 }

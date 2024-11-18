@@ -118,7 +118,7 @@ fun AlarmItem(
                     horizontalArrangement = Arrangement.Center
                 ){
                     Text(
-                        text = "${alarm.hour}:${alarm.minute}",
+                        text = String.format("%02d:%02d", alarm?.hour ?: 0, alarm?.minute ?: 0),
                         color = Color(0xFF0D0F19),
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.montserrat_regular)),

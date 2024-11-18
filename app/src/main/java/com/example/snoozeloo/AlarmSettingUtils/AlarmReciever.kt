@@ -37,7 +37,6 @@ class AlarmReciever: BroadcastReceiver() {
                     ActivityCompat.checkSelfPermission(it, Manifest.permission.POST_NOTIFICATIONS)
                 } != PackageManager.PERMISSION_GRANTED
             ) {
-                // If permission is not granted, handle it appropriately (e.g., show a message or request permission)
                 Log.d("AlarmReceiver", "Notification permission is not granted.")
                 return
             }
@@ -46,16 +45,17 @@ class AlarmReciever: BroadcastReceiver() {
         Log.d("AlarmReceiver", "Building notification for alarm ID: $alarmID")
         val alarmIntent = Intent(context, AlarmActivity::class.java).apply {
             putExtra("alarm_id", alarmID)  // Passing alarm data
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent = PendingIntent.getActivity(
             context,
-            0,
+            alarmID ?: 0,
             alarmIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         // Build the Notification
         val notification = NotificationCompat.Builder(context!!, "alarm_channel")
-            .setSmallIcon(android.R.drawable.ic_dialog_alert)
+            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
             .setContentTitle("Alarm Triggered")
             .setContentText("Tap to view Alarm Trigger Screen.")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
